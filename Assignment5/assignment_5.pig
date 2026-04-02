@@ -16,7 +16,7 @@ word_counts = FOREACH word_groups GENERATE
     FLATTEN(group) AS (category, word), 
     COUNT(clean_data) AS freq;
 
--- 5. Lấy Top 5 từ cho mỗi Category 
+-- Lấy Top 5 từ cho mỗi Category 
 cat_groups = GROUP word_counts BY category;
 top5_related = FOREACH cat_groups {
     sorted = ORDER word_counts BY freq DESC;
@@ -24,5 +24,5 @@ top5_related = FOREACH cat_groups {
     GENERATE FLATTEN(top_res);
 };
 
--- 6. Lưu kết quả
+-- Lưu kết quả
 STORE top5_related INTO '/user/duynguyen/output/assign5_top5_related';
